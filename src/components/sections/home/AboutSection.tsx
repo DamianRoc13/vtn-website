@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -29,88 +29,111 @@ export function AboutSection() {
     if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
 
-    const ctx = gsap.context(() => {
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 85%",
-          end: "bottom 45%",
-          scrub: true,
-        },
-      });
+    const mm = gsap.matchMedia();
 
-      textBlocksRef.current.forEach((block, idx) => {
+    const setupAnimations = ({
+      textStart,
+      imageStart,
+      badgeStart,
+      baseDelay,
+    }: {
+      textStart: string;
+      imageStart: string;
+      badgeStart: string;
+      baseDelay: number;
+    }) => {
+      textBlocksRef.current.forEach((block, index) => {
         if (!block) return;
-        timeline.fromTo(
+        gsap.fromTo(
           block,
-          { opacity: 0, y: 40, skewY: 4 },
+          { opacity: 0, y: 60, skewY: 6 },
           {
             opacity: 1,
             y: 0,
             skewY: 0,
-            duration: 0.8,
+            duration: 0.85,
             ease: "power3.out",
+            delay: index * baseDelay,
+            scrollTrigger: {
+              trigger: block,
+              start: textStart,
+              toggleActions: "play none none reverse",
+            },
           },
-          idx === 0 ? 0 : `-=${0.35}`,
         );
       });
 
-      if (imageRef.current) {
+      const photoCards =
+        imageRef.current?.querySelectorAll<HTMLElement>("[data-photo-card]") ?? [];
+
+      photoCards.forEach((card, idx) => {
         gsap.fromTo(
-          imageRef.current,
-          { opacity: 0, x: 80, rotate: 6, scale: 0.9 },
+          card,
+          {
+            opacity: 0,
+            y: 90,
+            rotate: idx % 2 === 0 ? -8 : 8,
+            scale: 0.9,
+          },
           {
             opacity: 1,
-            x: 0,
+            y: 0,
             rotate: 0,
             scale: 1,
-            duration: 1.2,
+            duration: 1.05,
             ease: "power3.out",
+            delay: idx * 0.14,
             scrollTrigger: {
-              trigger: imageRef.current,
-              start: "top 88%",
+              trigger: card,
+              start: imageStart,
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
+      });
+
+      if (badgeRef.current) {
+        gsap.fromTo(
+          badgeRef.current,
+          { y: 30, opacity: 0, scale: 0.95 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: badgeRef.current,
+              start: badgeStart,
               toggleActions: "play none none reverse",
             },
           },
         );
       }
+    };
 
-      if (badgeRef.current) {
-        gsap.fromTo(
-          badgeRef.current,
-          { y: -20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: badgeRef.current,
-              start: "top 85%",
-            },
-          },
-        );
-      }
-    }, sectionRef);
+    mm.add("(max-width: 767px)", () =>
+      setupAnimations({
+        textStart: "top 97%",
+        imageStart: "top 97%",
+        badgeStart: "top 99%",
+        baseDelay: 0.04,
+      }),
+    );
 
-    return () => ctx.revert();
+    mm.add("(min-width: 768px)", () =>
+      setupAnimations({
+        textStart: "top 84%",
+        imageStart: "top 82%",
+        badgeStart: "top 86%",
+        baseDelay: 0.08,
+      }),
+    );
+
+    return () => mm.revert();
   }, []);
 
-  const highlightParagraphs = useMemo(
-    () =>
-      paragraphs.map((text, index) => (
-        <p
-          key={text.slice(0, 20)}
-          ref={(el) => {
-            if (el) textBlocksRef.current[index] = el;
-          }}
-          className="rounded-[26px] border border-white/8 bg-white/[0.04] p-6 text-base leading-relaxed text-white/75 shadow-[0_12px_40px_-24px_rgba(232,68,46,0.35)] backdrop-blur-xl transition-all duration-500 hover:border-brand-500/40 hover:text-white"
-        >
-          {text}
-        </p>
-      )),
-    [],
-  );
+  textBlocksRef.current = [];
 
   return (
     <section id="nosotros" ref={sectionRef} className="section-padding bg-[#050505]">
@@ -151,11 +174,17 @@ export function AboutSection() {
 
         <div className="grid gap-12 lg:grid-cols-[1.15fr,0.85fr] lg:items-center">
           <div className="space-y-6">
-            {(() => {
-              textBlocksRef.current = [];
-              return null;
-            })()}
-            {highlightParagraphs}
+            {paragraphs.map((text, index) => (
+              <p
+                key={text.slice(0, 20)}
+                ref={(el) => {
+                  if (el) textBlocksRef.current[index] = el;
+                }}
+                className="rounded-[26px] border border-white/8 bg-white/[0.04] p-6 text-base leading-relaxed text-white/75 shadow-[0_12px_40px_-24px_rgba(232,68,46,0.35)] backdrop-blur-xl transition-all duration-500 hover:border-brand-500/40 hover:text-white"
+              >
+                {text}
+              </p>
+            ))}
 
             <div
               ref={badgeRef}
@@ -178,7 +207,10 @@ export function AboutSection() {
           >
             <div className="absolute inset-0 -z-10 rounded-[44px] bg-gradient-to-br from-brand-500/25 via-transparent to-brand-500/5 blur-3xl" />
 
-            <div className="group relative overflow-hidden rounded-[34px] border border-white/10 bg-[#08090c] p-6 shadow-[0_30px_80px_rgba(232,68,46,0.25)]">
+            <div
+              data-photo-card
+              className="group relative overflow-hidden rounded-[34px] border border-white/10 bg-[#08090c] p-6 shadow-[0_30px_80px_rgba(232,68,46,0.25)]"
+            >
               <div className="overflow-hidden rounded-[24px] border border-white/10">
                 <img
                   src="/cuadrado-people.webp"
@@ -197,7 +229,10 @@ export function AboutSection() {
               </div>
             </div>
 
-            <div className="group relative overflow-hidden rounded-[34px] border border-white/10 bg-[#08090c] p-6 shadow-[0_30px_80px_rgba(232,68,46,0.2)]">
+            <div
+              data-photo-card
+              className="group relative overflow-hidden rounded-[34px] border border-white/10 bg-[#08090c] p-6 shadow-[0_30px_80px_rgba(232,68,46,0.2)]"
+            >
               <div className="overflow-hidden rounded-[24px] border border-white/10">
                 <img
                   src="/kinston.webp"
