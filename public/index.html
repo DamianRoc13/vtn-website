@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:url" content="https://vistatradingnetwork.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Vista Trading Network">
+    <meta property="og:description" content="Su socio confiable en comercio internacional">
+    <meta property="og:image" content="https://vistatradingnetwork.com/assets/og-img-2.png">
+    <title>Vista Trading Network</title>
+    
+    <!-- Favicon para modo claro -->
+    <link rel="icon" type="image/svg+xml" href="assets/vtn-image-back-white.svg" 
+          media="(prefers-color-scheme: light)">
+    
+    <!-- Favicon para modo oscuro -->
+    <link rel="icon" type="image/svg+xml" href="assets/vtn-image-all-white.svg" 
+          media="(prefers-color-scheme: dark)">
+    
+    <!-- Favicon por defecto -->
+    <link rel="icon" type="image/svg+xml" href="assets/vtn-image-back-white.svg">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // Configuración de Tailwind para el modo oscuro
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --transition-speed: 0.5s;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        
+        .slide {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .dark .service-card {
+            background-color: #1f2937;
+        }
+        
+        .carousel-container {
+            height: 70vh;
+        }
+        
+        @media (max-width: 768px) {
+            .carousel-container {
+                height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <div id="google_translate_element" style="display:none;"></div>
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-white bg-opacity-90 dark:bg-gray-900 dark:bg-opacity-90 shadow-md transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="assets/vtn-image-back-white.svg" alt="Vista Trading Network Logo" 
+         class="w-8 h-8 block dark:hidden">
+    <img src="assets/vtn-image-all-white.svg" alt="Vista Trading Network Logo" 
+         class="w-8 h-8 hidden dark:block">
+                <span class="text-xl font-bold">Vista Trading Network</span>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#inicio" class="nav-link font-medium">Inicio</a>
+                <a href="#servicios" class="nav-link font-medium">Servicios</a>
+                <a href="#nosotros" class="nav-link font-medium">Nosotros</a>
+                <a href="#contacto" class="nav-link font-medium">Contacto</a>
+
+                <div class="relative">
+                    <button id="language-toggle" class="flex items-center space-x-1 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-globe"></i>
+                        <span class="text-sm" id="current-lang">ES</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="language-menu" class="hidden">
+                        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200" data-lang="es">Español</a>
+        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200" data-lang="en">English</a>
+                    </div>
+                </div> 
+
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+            
+            <div class="md:hidden flex items-center">
+                <button id="theme-toggle-mobile" class="p-2 mr-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                <button id="mobile-menu-button" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 shadow-lg">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#inicio" class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Inicio</a>
+                <a href="#servicios" class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Servicios</a>
+                <a href="#nosotros" class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Nosotros</a>
+                <a href="#contacto" class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">Contacto</a>
+                
+                <!-- Separador -->
+                <div class="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+                
+                <!-- Opciones de idioma -->
+                <div class="py-2 px-4">
+                    <div class="font-medium mb-2">Idioma</div>
+                    <button data-lang="es" class="block w-full py-2 px-4 text-left hover:bg-gray-100 dark:hover:bg-gray-800 rounded" onclick="changeLanguage('es')">
+                        Español
+                    </button>
+                    <button data-lang="en" class="block w-full py-2 px-4 text-left hover:bg-gray-100 dark:hover:bg-gray-800 rounded" onclick="changeLanguage('en')">
+                        English
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Carousel -->
+    <section id="inicio" class="pt-16">
+        <div class="carousel-container relative w-full overflow-hidden">
+            <div class="slides h-full">
+                <!-- Slide 1 -->
+                <div class="slide active h-full">
+                    <div class="h-full flex items-center justify-center bg-cover bg-center relative" style="background-image: url('assets/meet.webp');">
+                        <div class="absolute inset-0 bg-gray-900 bg-opacity-60"></div>
+                        <div class="container mx-auto px-6 md:px-12 text-center text-white rounded-lg py-12 relative z-10">
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Vista Trading Network</h1>
+                            <p class="text-xl md:text-2xl mb-8">Su socio confiable en comercio internacional</p>
+                            <a href="#servicios" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300 inline-block">
+                                Nuestros Servicios
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="slide h-full">
+                    <div class="h-full flex items-center justify-center bg-cover bg-center relative" style="background-image: url('assets/fabry.webp');">
+                        <div class="absolute inset-0 bg-gray-900 bg-opacity-60"></div>
+                        <div class="container mx-auto px-6 md:px-12 text-center text-white rounded-lg py-12 relative z-10">
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Expertos en Comercio Global</h1>
+                            <p class="text-xl md:text-2xl mb-8">Conectamos negocios con proveedores confiables</p>
+                            <a href="#contacto" class="bg-white text-gray-900 hover:bg-gray-100 font-bold py-3 px-8 rounded-full transition-colors duration-300 inline-block">
+                                Contáctenos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="slide h-full">
+                    <div class="h-full flex items-center justify-center bg-cover bg-center relative" style="background-image: url('assets/social.webp');">
+                        <div class="absolute inset-0 bg-gray-900 bg-opacity-60"></div>
+                        <div class="container mx-auto px-6 md:px-12 text-center text-white rounded-lg py-12 relative z-10">
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Soluciones Personalizadas</h1>
+                            <p class="text-xl md:text-2xl mb-8">Asesoría especializada para su negocio</p>
+                            <a href="#servicios" class="border-2 border-white hover:bg-white hover:text-red-900 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300 inline-block">
+                                Descubra Más
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Controls -->
+            <div class="absolute bottom-5 left-0 right-0 flex justify-center space-x-3">
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white bg-opacity-50 focus:outline-none active-dot"></button>
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white bg-opacity-50 focus:outline-none"></button>
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white bg-opacity-50 focus:outline-none"></button>
+            </div>
+            
+            <button class="carousel-control prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white rounded-full p-2 focus:outline-none">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-control next absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white rounded-full p-2 focus:outline-none">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Nuestros Servicios</h2>
+                <div class="w-24 h-1 bg-red-600 mx-auto"></div>
+                <p class="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Ofrecemos soluciones integrales para optimizar sus operaciones comerciales internacionales
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-handshake text-2xl text-red-600 dark:text-red-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Agente de Compras</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Representamos sus intereses comerciales, negociando con proveedores para obtener los mejores términos y precios.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-search text-2xl text-red-600 dark:text-red-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Búsqueda de Proveedores</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Identificamos y verificamos proveedores confiables que cumplan con sus requisitos específicos y estándares de calidad.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-language text-2xl text-red-600 dark:text-red-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Guía e Intérprete</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Facilitamos la comunicación efectiva con sus socios comerciales, superando barreras culturales e idiomáticas.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-clipboard-check text-2xl text-red-600 dark:text-red-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Inspecciones</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Verificamos la calidad y conformidad de los productos antes del envío para garantizar que cumplan con sus especificaciones.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="service-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-plane text-2xl text-red-600 dark:text-red-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Planes de Ferias o Viajes</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Organizamos su participación en ferias comerciales y coordinamos itinerarios de viaje optimizados para sus objetivos de negocio.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="service-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-chalkboard-teacher text-2xl text-red-600 dark:text-red-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Curso/Asesoría Personalizada</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Capacitación especializada y consultoría adaptada a las necesidades específicas de su empresa en comercio internacional.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="nosotros" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Sobre Nosotros</h2>
+                <div class="w-24 h-1 bg-red-600 mx-auto"></div>
+            </div>
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">Vista Trading Network es una empresa con sede en Shenzhen, China, dedicada a brindar soluciones de comercio internacional para emprendedores y empresas de América Latina.</p>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">Fundada y dirigida por Elizabeth Olivo, una ecuatoriana que llegó a China en 2017 con el sueño de crear puentes entre dos culturas.</p>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">Tras ocho años de experiencia viviendo, estudiando y trabajando en Shenzhen, decidí lanzar mi propia empresa en 2024 para ofrecer un servicio más humano, transparente y efectivo.</p>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">Conozco a fondo el mercado chino, hablo español, inglés y chino, y he trabajado con importadores de distintos países que hoy confían en mí para encontrar los productos correctos, negociar con proveedores y acompañarlos en ferias, visitas a fábricas o controles de calidad.</p>
+                    <p class="text-lg text-gray-600 dark:text-gray-300">En Vista Trading Network no solo gestionamos productos; construimos relaciones de confianza. Podemos ayudarte a encontrar cualquier producto que necesites, desde artículos promocionales hasta maquinaria, electrónica, moda o empaques personalizados. Nuestra misión es que importes con seguridad, claridad y sin complicaciones.</p>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <div class="bg-gray-200 dark:bg-gray-700 rounded-lg h-110 w-full relative overflow-hidden">
+                            <img src="assets/cuadrado-people.webp" alt="Elizabeth Olivo" class="w-full h-full object-cover">
+
+                            <div class="absolute inset-0 flex item-center justify-center">
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonios" class="py-20 h-full flex items-center justify-center bg-cover bg-center relative" style="background-image: url('assets/feria-1.webp');">
+        <!-- Overlay para modo claro/oscuro -->
+        <div class="absolute inset-0 z-0">
+            <div class="block dark:hidden w-full h-full bg-white bg-opacity-60"></div>
+            <div class="hidden dark:block w-full h-full bg-black bg-opacity-70"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Testimonios</h2>
+                <div class="w-24 h-1 bg-red-600 mx-auto"></div>
+                <p class="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Lo que nuestros clientes dicen sobre nosotros.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Testimonio 1 -->
+                <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+                    <p class="text-gray-600 dark:text-gray-300 italic mb-4">
+                        “Conocí a Elizabeth en una feria en Guangzhou y me ayudó a encontrar tres proveedores confiables. Me acompañó en todo el proceso y gracias a ella hoy importo termos personalizados para mi negocio. Muy profesional y honesta.”
+                    </p>
+                    <h4 class="text-lg font-bold text-red-600 dark:text-gray-400">Carlos M. – Perú</h4>
+                </div>
+                <!-- Testimonio 2 -->
+                <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+                    <p class="text-gray-600 dark:text-gray-300 italic mb-4">
+                        “Era mi primera vez en China y estaba nerviosa, pero desde el primer día Elizabeth fue como una guía y amiga. Me ayudó con traducciones, transporte y hasta con los detalles del envío. ¡Una experiencia increíble!”
+                    </p>
+                    <h4 class="text-lg font-bold text-red-600 dark:text-gray-400">María José R. – Ecuador</h4>
+                </div>
+                <!-- Testimonio 3 -->
+                <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+                    <p class="text-gray-600 dark:text-gray-300 italic mb-4">
+                        “Buscaba luces LED para mi tienda y ella encontró una fábrica excelente. Además, revisó la calidad por mí antes de enviar todo. Me ahorró tiempo y dolores de cabeza.”
+                    </p>
+                    <h4 class="text-lg font-bold text-red-600 dark:text-gray-400">Luis D. – Colombia</h4>
+                </div>
+                <!-- Testimonio 4 -->
+                <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
+                    <p class="text-gray-600 dark:text-gray-300 italic mb-4">
+                        “La atención fue personalizada desde el primer mensaje. Me explicó todo con paciencia y se adaptó a mi presupuesto. Ya llevo dos compras con Vista Trading Network y seguiré confiando en ellos.”
+                    </p>
+                    <h4 class="text-lg font-bold text-red-600 dark:text-gray-400">Carla T. – México</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-20 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Contáctenos</h2>
+                <div class="w-24 h-1 bg-red-600 mx-auto"></div>
+                <p class="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Estamos listos para ayudarle con sus necesidades de comercio internacional
+                </p>
+            </div>
+            <div class="space-y-6">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-map-marker-alt text-xl text-red-600 dark:text-red-300"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Dirección</h4>
+                        <p class="text-gray-600 dark:text-gray-300">C05, R&D Complex Building, Fuhua Community, Xixiang Street, Bao'an District, Shenzhen</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-phone text-xl text-red-600 dark:text-red-300"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Teléfono</h4>
+                        <p class="text-gray-600 dark:text-gray-300">+86 150 1277 5212</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-envelope text-xl text-red-600 dark:text-red-300"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Correo Electrónico</h4>
+                        <p class="text-gray-600 dark:text-gray-300">info@vistatradingnetwork.com</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-clock text-xl text-red-600 dark:text-red-300"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">Horario de Atención</h4>
+                        <p class="text-gray-600 dark:text-gray-300">Lunes a Viernes: 9:00 AM - 6:00 PM<br>Sábado: 9:00 AM - 1:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <img src="assets/vtn-image-all-white.svg" alt="Vista Trading Network Logo" 
+         class="w-8 h-8">
+                        <span class="text-xl font-bold">Vista Trading Network</span>
+                    </div>
+                    <p class="text-gray-400 max-w-xs">
+                        Su socio confiable para navegar el complejo mundo del comercio internacional.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Enlaces Rápidos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#inicio" class="text-gray-400 hover:text-white transition-colors">Inicio</a></li>
+                            <li><a href="#servicios" class="text-gray-400 hover:text-white transition-colors">Servicios</a></li>
+                            <li><a href="#nosotros" class="text-gray-400 hover:text-white transition-colors">Nosotros</a></li>
+                            <li><a href="#contacto" class="text-gray-400 hover:text-white transition-colors">Contacto</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Servicios</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Agente de Compras</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Búsqueda de Proveedores</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Guía e Intérprete</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Inspecciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    @ 2025 Vista Trading Network. Todos los derechos reservados.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="https://wa.me/+8615012775212" class="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@vista.trading.net?is_from_webapp=1&sender_device=pc" class="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://www.instagram.com/vistatradingnetwork?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+   class="text-gray-400 hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer">
+    <i class="fab fa-instagram"></i>
+</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="language-menu-mobile" class="hidden fixed bottom-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50">
+        <div class="p-2 space-y-2">
+            <button data-lang="es" class="w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                <span>ES</span>
+                <span>Español</span>
+            </button>
+            <button data-lang="en" class="w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                <span>EN</span>
+                <span>English</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const html = document.documentElement;
+        
+        function toggleDarkMode() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('darkMode', 'false');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('darkMode', 'true');
+            }
+        }
+        
+        // Check for saved theme preference or use system preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            html.classList.add('dark');
+        } else if (localStorage.getItem('darkMode') === 'false') {
+            html.classList.remove('dark');
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            html.classList.add('dark');
+            localStorage.setItem('darkMode', 'true');
+        }
+        
+        themeToggle.addEventListener('click', toggleDarkMode);
+        themeToggleMobile.addEventListener('click', toggleDarkMode);
+        
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Carousel functionality
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevButton = document.querySelector('.carousel-control.prev');
+        const nextButton = document.querySelector('.carousel-control.next');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active-dot'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active-dot');
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            let next = currentSlide + 1;
+            if (next >= slides.length) next = 0;
+            showSlide(next);
+        }
+        
+        function prevSlide() {
+            let prev = currentSlide - 1;
+            if (prev < 0) prev = slides.length - 1;
+            showSlide(prev);
+        }
+        
+        // Event listeners for carousel controls
+        prevButton.addEventListener('click', prevSlide);
+        nextButton.addEventListener('click', nextSlide);
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+        
+        // Auto-advance carousel
+        setInterval(nextSlide, 5000);
+        
+        // Textos en diferentes idiomas
+        const translations = {
+            es: {
+                navInicio: "Inicio",
+                navServicios: "Servicios",
+                navNosotros: "Nosotros",
+                navContacto: "Contacto",
+                heroTitulo1: "Vista Trading Network",
+                heroSubtitulo1: "Su socio confiable en comercio internacional",
+                heroBoton1: "Nuestros Servicios",
+                heroTitulo2: "Expertos en Comercio Global",
+                heroSubtitulo2: "Conectamos negocios con proveedores confiables",
+                heroBoton2: "Contáctenos",
+                heroTitulo3: "Soluciones Personalizadas",
+                heroSubtitulo3: "Asesoría especializada para su negocio",
+                heroBoton3: "Descubra Más",
+                serviciosTitulo: "Nuestros Servicios",
+                serviciosDescripcion: "Ofrecemos soluciones integrales para optimizar sus operaciones comerciales internacionales",
+                servicio1Titulo: "Agente de Compras",
+                servicio1Descripcion: "Representamos sus intereses comerciales, negociando con proveedores para obtener los mejores términos y precios.",
+                servicio2Titulo: "Búsqueda de Proveedores",
+                servicio2Descripcion: "Identificamos y verificamos proveedores confiables que cumplan con sus requisitos específicos y estándares de calidad.",
+                servicio3Titulo: "Guía e Intérprete",
+                servicio3Descripcion: "Facilitamos la comunicación efectiva con sus socios comerciales, superando barreras culturales e idiomáticas.",
+                servicio4Titulo: "Inspecciones",
+                servicio4Descripcion: "Verificamos la calidad y conformidad de los productos antes del envío para garantizar que cumplan con sus especificaciones.",
+                servicio5Titulo: "Planes de Ferias o Viajes",
+                servicio5Descripcion: "Organizamos su participación en ferias comerciales y coordinamos itinerarios de viaje optimizados para sus objetivos de negocio.",
+                servicio6Titulo: "Curso/Asesoría Personalizada",
+                servicio6Descripcion: "Capacitación especializada y consultoría adaptada a las necesidades específicas de su empresa en comercio internacional.",
+                nosotrosTitulo: "Sobre Nosotros",
+                nosotrosDescripcion1: "Vista Trading Network es una empresa con sede en Shenzhen, China, dedicada a brindar soluciones de comercio internacional para emprendedores y empresas de América Latina.",
+                nosotrosDescripcion2: "Fundada y dirigida por Elizabeth Olivo, una ecuatoriana que llegó a China en 2017 con el sueño de crear puentes entre dos culturas.",
+                nosotrosDescripcion3: "Tras ocho años de experiencia viviendo, estudiando y trabajando en Shenzhen, decidí lanzar mi propia empresa en 2024 para ofrecer un servicio más humano, transparente y efectivo.",
+                nosotrosDescripcion4: "Conozco a fondo el mercado chino, hablo español, inglés y chino, y he trabajado con importadores de distintos países que hoy confían en mí para encontrar los productos correctos, negociar con proveedores y acompañarlos en ferias, visitas a fábricas o controles de calidad.",
+                nosotrosDescripcion5: "En Vista Trading Network no solo gestionamos productos; construimos relaciones de confianza. Podemos ayudarte a encontrar cualquier producto que necesites, desde artículos promocionales hasta maquinaria, electrónica, moda o empaques personalizados. Nuestra misión es que importes con seguridad, claridad y sin complicaciones.",
+                contactoTitulo: "Contáctenos",
+                contactoDescripcion: "Estamos listos para ayudarle con sus necesidades de comercio internacional",
+                contactoDireccionTitulo: "Dirección",
+                contactoDireccionContenido: "C05, R&D Complex Building, Fuhua Community, Xixiang Street, Bao'an District, Shenzhen",
+                contactoTelefonoTitulo: "Teléfono",
+                contactoTelefonoContenido: "+86 150 1277 5212",
+                contactoCorreoTitulo: "Correo Electrónico",
+                contactoCorreoContenido: "info@vistatradingnetwork.com",
+                contactoHorarioTitulo: "Horario de Atención",
+                contactoHorarioContenido: "Lunes a Viernes: 9:00 AM - 6:00 PM\nSábado: 9:00 AM - 1:00 PM",
+                footerTitulo: "Vista Trading Network",
+                footerDescripcion: "Su socio confiable para navegar el complejo mundo del comercio internacional.",
+                footerEnlaces: "Enlaces Rápidos",
+                footerServicios: "Servicios",
+                footerDerechos: "@ 2025 Vista Trading Network. Todos los derechos reservados.",
+                idiomaTitulo: "Idioma",
+                idiomaEspanol: "Español",
+                idiomaIngles: "English",
+                idiomaChino: "中文",
+                puenteGlobal: "Su puente hacia el comercio global",
+                footerEnlacesTitulo: "Enlaces Rápidos",
+                footerEnlaceInicio: "Inicio",
+                footerEnlaceServicios: "Servicios",
+                footerEnlaceNosotros: "Nosotros",
+                footerEnlaceContacto: "Contacto",
+                footerServiciosTitulo: "Servicios",
+                footerServicio1: "Agente de Compras",
+                footerServicio2: "Búsqueda de Proveedores",
+                footerServicio3: "Guía e Intérprete",
+                footerServicio4: "Inspecciones",
+                testimoniosTitulo: "Testimonios",
+                testimoniosDescripcion: "Lo que nuestros clientes dicen sobre nosotros.",
+                testimonio1Texto: "Conocí a Elizabeth en una feria en Guangzhou y me ayudó a encontrar tres proveedores confiables. Me acompañó en todo el proceso y gracias a ella hoy importo termos personalizados para mi negocio. Muy profesional y honesta.",
+                testimonio1Autor: "Carlos M. – Perú",
+                testimonio2Texto: "Era mi primera vez en China y estaba nerviosa, pero desde el primer día Elizabeth fue como una guía y amiga. Me ayudó con traducciones, transporte y hasta con los detalles del envío. ¡Una experiencia increíble!",
+                testimonio2Autor: "María José R. – Ecuador",
+                testimonio3Texto: "Buscaba luces LED para mi tienda y ella encontró una fábrica excelente. Además, revisó la calidad por mí antes de enviar todo. Me ahorró tiempo y dolores de cabeza.",
+                testimonio3Autor: "Luis D. – Colombia",
+                testimonio4Texto: "La atención fue personalizada desde el primer mensaje. Me explicó todo con paciencia y se adaptó a mi presupuesto. Ya llevo dos compras con Vista Trading Network y seguiré confiando en ellos.",
+                testimonio4Autor: "Carla T. – México",
+            },
+            en: {
+                navInicio: "Home",
+                navServicios: "Services",
+                navNosotros: "About Us",
+                navContacto: "Contact",
+                heroTitulo1: "Vista Trading Network",
+                heroSubtitulo1: "Your trusted partner in international trade",
+                heroBoton1: "Our Services",
+                heroTitulo2: "Global Trade Experts",
+                heroSubtitulo2: "Connecting businesses with reliable suppliers",
+                heroBoton2: "Contact Us",
+                heroTitulo3: "Customized Solutions",
+                heroSubtitulo3: "Specialized advice for your business",
+                heroBoton3: "Learn More",
+                serviciosTitulo: "Our Services",
+                serviciosDescripcion: "We offer comprehensive solutions to optimize your international trade operations",
+                servicio1Titulo: "Purchasing Agent",
+                servicio1Descripcion: "We represent your business interests, negotiating with suppliers to get the best terms and prices.",
+                servicio2Titulo: "Supplier Search",
+                servicio2Descripcion: "We identify and verify reliable suppliers that meet your specific requirements and quality standards.",
+                servicio3Titulo: "Guide and Interpreter",
+                servicio3Descripcion: "We facilitate effective communication with your business partners, overcoming cultural and language barriers.",
+                servicio4Titulo: "Inspections",
+                servicio4Descripcion: "We verify the quality and compliance of products before shipment to ensure they meet your specifications.",
+                servicio5Titulo: "Trade Fair or Travel Plans",
+                servicio5Descripcion: "We organize your participation in trade fairs and coordinate travel itineraries optimized for your business goals.",
+                servicio6Titulo: "Course/Personalized Advice",
+                servicio6Descripcion: "Specialized training and consulting tailored to your company's specific needs in international trade.",
+                nosotrosTitulo: "About Us",
+                nosotrosDescripcion1: "Vista Trading Network is a company based in Shenzhen, China, dedicated to providing international trade solutions for entrepreneurs and businesses in Latin America.",
+                nosotrosDescripcion2: "Founded and led by Elizabeth Olivo, an Ecuadorian who arrived in China in 2017 with the dream of building bridges between two cultures.",
+                nosotrosDescripcion3: "After eight years of experience living, studying, and working in Shenzhen, I decided to launch my own company in 2024 to offer a more human, transparent, and effective service.",
+                nosotrosDescripcion4: "I have in-depth knowledge of the Chinese market, speak Spanish, English, and Chinese, and have worked with importers from various countries who now trust me to find the right products, negotiate with suppliers, and accompany them to fairs, factory visits, or quality controls.",
+                nosotrosDescripcion5: "At Vista Trading Network, we not only manage products; we build relationships of trust. We can help you find any product you need, from promotional items to machinery, electronics, fashion, or custom packaging. Our mission is to help you import with security, clarity, and ease.",
+                contactoTitulo: "Contact Us",
+                contactoDescripcion: "We are ready to assist you with your international trade needs",
+                contactoDireccionTitulo: "Address",
+                contactoDireccionContenido: "C05, R&D Complex Building, Fuhua Community, Xixiang Street, Bao'an District, Shenzhen",
+                contactoTelefonoTitulo: "Phone",
+                contactoTelefonoContenido: "+86 150 1277 5212",
+                contactoCorreoTitulo: "Email",
+                contactoCorreoContenido: "info@vistatradingnetwork.com",
+                contactoHorarioTitulo: "Business Hours",
+                contactoHorarioContenido: "Monday to Friday: 9:00 AM - 6:00 PM\nSaturday: 9:00 AM - 1:00 PM",
+                footerTitulo: "Vista Trading Network",
+                footerDescripcion: "Your trusted partner to navigate the complex world of international trade.",
+                footerEnlaces: "Quick Links",
+                footerServicios: "Services",
+                footerDerechos: "@ 2025 Vista Trading Network. All rights reserved.",
+                idiomaTitulo: "Language",
+                idiomaEspanol: "Spanish",
+                idiomaIngles: "English",
+                idiomaChino: "Chinese",
+                puenteGlobal: "Your bridge to global trade",
+                footerEnlacesTitulo: "Quick Links",
+                footerEnlaceInicio: "Home",
+                footerEnlaceServicios: "Services",
+                footerEnlaceNosotros: "About Us",
+                footerEnlaceContacto: "Contact",
+                footerServiciosTitulo: "Services",
+                footerServicio1: "Purchasing Agent",
+                footerServicio2: "Supplier Search",
+                footerServicio3: "Guide and Interpreter",
+                footerServicio4: "Inspections",
+                testimoniosTitulo: "Testimonials",
+                testimoniosDescripcion: "What our clients say about us.",
+                testimonio1Texto: "I met Elizabeth at a fair in Guangzhou, and she helped me find three reliable suppliers. She accompanied me throughout the process, and thanks to her, I now import customized thermoses for my business. Very professional and honest.",
+                testimonio1Autor: "Carlos M. – Peru",
+                testimonio2Texto: "It was my first time in China, and I was nervous, but from day one, Elizabeth was like a guide and friend. She helped me with translations, transportation, and even the shipping details. An incredible experience!",
+                testimonio2Autor: "María José R. – Ecuador",
+                testimonio3Texto: "I was looking for LED lights for my store, and she found an excellent factory. She also checked the quality for me before shipping everything. She saved me time and headaches.",
+                testimonio3Autor: "Luis D. – Colombia",
+                testimonio4Texto: "The attention was personalized from the first message. She explained everything patiently and adapted to my budget. I've already made two purchases with Vista Trading Network and will continue trusting them.",
+                testimonio4Autor: "Carla T. – Mexico",
+            }
+        };
+
+        // Mostrar/ocultar el menú de idiomas al hacer clic en el botón
+        const languageToggle = document.getElementById('language-toggle');
+        const languageMenu = document.getElementById('language-menu');
+
+        languageToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            languageMenu.classList.toggle('hidden');
+        });
+
+        // Cerrar el menú de idiomas al hacer clic fuera de él
+        document.addEventListener('click', (e) => {
+            if (!languageMenu.contains(e.target) && !languageToggle.contains(e.target)) {
+                languageMenu.classList.add('hidden');
+            }
+        });
+
+        // Función para aplicar la traducción
+        function applyTranslation(lang) {
+            const elements = {
+                navInicio: document.querySelector('a[href="#inicio"]'),
+                navServicios: document.querySelector('a[href="#servicios"]'),
+                navNosotros: document.querySelector('a[href="#nosotros"]'),
+                navContacto: document.querySelector('a[href="#contacto"]'),
+                heroTitulo1: document.querySelector('.slide:nth-child(1) h1'),
+                heroSubtitulo1: document.querySelector('.slide:nth-child(1) p'),
+                heroBoton1: document.querySelector('.slide:nth-child(1) a'),
+                heroTitulo2: document.querySelector('.slide:nth-child(2) h1'),
+                heroSubtitulo2: document.querySelector('.slide:nth-child(2) p'),
+                heroBoton2: document.querySelector('.slide:nth-child(2) a'),
+                heroTitulo3: document.querySelector('.slide:nth-child(3) h1'),
+                heroSubtitulo3: document.querySelector('.slide:nth-child(3) p'),
+                heroBoton3: document.querySelector('.slide:nth-child(3) a'),
+                serviciosTitulo: document.querySelector('#servicios h2'),
+                serviciosDescripcion: document.querySelector('#servicios p'),
+                servicio1Titulo: document.querySelector('#servicios .service-card:nth-child(1) h3'),
+                servicio1Descripcion: document.querySelector('#servicios .service-card:nth-child(1) p'),
+                servicio2Titulo: document.querySelector('#servicios .service-card:nth-child(2) h3'),
+                servicio2Descripcion: document.querySelector('#servicios .service-card:nth-child(2) p'),
+                servicio3Titulo: document.querySelector('#servicios .service-card:nth-child(3) h3'),
+                servicio3Descripcion: document.querySelector('#servicios .service-card:nth-child(3) p'),
+                servicio4Titulo: document.querySelector('#servicios .service-card:nth-child(4) h3'),
+                servicio4Descripcion: document.querySelector('#servicios .service-card:nth-child(4) p'),
+                servicio5Titulo: document.querySelector('#servicios .service-card:nth-child(5) h3'),
+                servicio5Descripcion: document.querySelector('#servicios .service-card:nth-child(5) p'),
+                servicio6Titulo: document.querySelector('#servicios .service-card:nth-child(6) h3'),
+                servicio6Descripcion: document.querySelector('#servicios .service-card:nth-child(6) p'),
+                nosotrosTitulo: document.querySelector('#nosotros h2'),
+                nosotrosDescripcion1: document.querySelector('#nosotros p:nth-child(1)'),
+                nosotrosDescripcion2: document.querySelector('#nosotros p:nth-child(2)'),
+                nosotrosDescripcion3: document.querySelector('#nosotros p:nth-child(3)'),
+                nosotrosDescripcion4: document.querySelector('#nosotros p:nth-child(4)'),
+                nosotrosDescripcion5: document.querySelector('#nosotros p:nth-child(5)'),
+                contactoTitulo: document.querySelector('#contacto h2'),
+                contactoDescripcion: document.querySelector('#contacto p'),
+                contactoDireccionTitulo: document.querySelector('#contacto .space-y-6 .flex:nth-child(1) h4'),
+                contactoDireccionContenido: document.querySelector('#contacto .space-y-6 .flex:nth-child(1) p'),
+                contactoTelefonoTitulo: document.querySelector('#contacto .space-y-6 .flex:nth-child(2) h4'),
+                contactoTelefonoContenido: document.querySelector('#contacto .space-y-6 .flex:nth-child(2) p'),
+                contactoCorreoTitulo: document.querySelector('#contacto .space-y-6 .flex:nth-child(3) h4'),
+                contactoCorreoContenido: document.querySelector('#contacto .space-y-6 .flex:nth-child(3) p'),
+                contactoHorarioTitulo: document.querySelector('#contacto .space-y-6 .flex:nth-child(4) h4'),
+                contactoHorarioContenido: document.querySelector('#contacto .space-y-6 .flex:nth-child(4) p'),
+                footerTitulo: document.querySelector('footer .text-xl'),
+                footerDescripcion: document.querySelector('footer .text-gray-400'),
+                footerEnlaces: document.querySelector('footer .grid div:nth-child(1) h4'),
+                footerServicios: document.querySelector('footer .grid div:nth-child(2) h4'),
+                footerDerechos: document.querySelector('footer .border-t p'),
+                puenteGlobal: document.querySelector('#nosotros .text-center p.mt-2'),
+                footerEnlacesTitulo: document.querySelector('footer .grid div:nth-child(1) h4'),
+                footerEnlaceInicio: document.querySelector('footer .grid div:nth-child(1) ul li:nth-child(1) a'),
+                footerEnlaceServicios: document.querySelector('footer .grid div:nth-child(1) ul li:nth-child(2) a'),
+                footerEnlaceNosotros: document.querySelector('footer .grid div:nth-child(1) ul li:nth-child(3) a'),
+                footerEnlaceContacto: document.querySelector('footer .grid div:nth-child(1) ul li:nth-child(4) a'),
+                footerServiciosTitulo: document.querySelector('footer .grid div:nth-child(2) h4'),
+                footerServicio1: document.querySelector('footer .grid div:nth-child(2) ul li:nth-child(1) a'),
+                footerServicio2: document.querySelector('footer .grid div:nth-child(2) ul li:nth-child(2) a'),
+                footerServicio3: document.querySelector('footer .grid div:nth-child(2) ul li:nth-child(3) a'),
+                footerServicio4: document.querySelector('footer .grid div:nth-child(2) ul li:nth-child(4) a'),
+                testimoniosTitulo: document.querySelector('#testimonios h2'),
+                testimoniosDescripcion: document.querySelector('#testimonios p'),
+                testimonio1Texto: document.querySelector('#testimonios .grid div:nth-child(1) p'),
+                testimonio1Autor: document.querySelector('#testimonios .grid div:nth-child(1) h4'),
+                testimonio2Texto: document.querySelector('#testimonios .grid div:nth-child(2) p'),
+                testimonio2Autor: document.querySelector('#testimonios .grid div:nth-child(2) h4'),
+                testimonio3Texto: document.querySelector('#testimonios .grid div:nth-child(3) p'),
+                testimonio3Autor: document.querySelector('#testimonios .grid div:nth-child(3) h4'),
+                testimonio4Texto: document.querySelector('#testimonios .grid div:nth-child(4) p'),
+                testimonio4Autor: document.querySelector('#testimonios .grid div:nth-child(4) h4'),
+            };
+
+            // Aplicar los textos traducidos
+            Object.keys(elements).forEach(key => {
+                const element = elements[key];
+                if (element) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Actualizar el texto del botón de idioma actual
+            const currentLangElement = document.getElementById('current-lang');
+            if (currentLangElement) {
+                currentLangElement.textContent = lang.toUpperCase();
+            }
+        }
+
+        // Configurar eventos de cambio de idioma
+        const languageLinks = document.querySelectorAll('#language-menu a[data-lang]');
+
+        languageLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const selectedLang = this.getAttribute('data-lang');
+                applyTranslation(selectedLang);
+
+                // Cerrar el menú de idiomas
+                languageMenu.classList.add('hidden');
+            });
+        });
+
+        // Aplicar idioma predeterminado (español)
+        applyTranslation('es');
+
+        // Función para cambiar el idioma y cerrar el menú móvil
+        function changeLanguage(lang) {
+            applyTranslation(lang);
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.add('hidden');
+        }
+    </script>
+    <script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.com/widget?wc=siq10037a89c38e615f4ddfcedaf9b528ada640a498625367028a0a17fbd3c1bf42" defer></script>
+</body>
+</html>
