@@ -4,12 +4,37 @@ import { motion } from "framer-motion";
 import { World } from "./Globe";
 
 const globeData = [
-  { order: 1, startLat: 40.7128, startLng: -74.006, endLat: -33.4489, endLng: -70.6693, arcAlt: 0.3, color: "#E8442E" },
-  { order: 2, startLat: 40.7128, startLng: -74.006, endLat: 48.8566, endLng: 2.3522, arcAlt: 0.4, color: "#F97316" },
-  { order: 3, startLat: -0.2295, startLng: -78.5243, endLat: 34.0522, endLng: -118.2437, arcAlt: 0.45, color: "#DC2626" },
-  { order: 4, startLat: -0.2295, startLng: -78.5243, endLat: 19.4326, endLng: -99.1332, arcAlt: 0.35, color: "#FB923C" },
-  { order: 5, startLat: 52.52, startLng: 13.405, endLat: -12.0464, endLng: -77.0428, arcAlt: 0.55, color: "#F87171" },
-  { order: 6, startLat: 22.3193, startLng: 114.1694, endLat: 1.3521, endLng: 103.8198, arcAlt: 0.5, color: "#FCA5A5" },
+  // North America ↔ South America
+  { order: 1, startLat: 40.7128, startLng: -74.006, endLat: -33.4489, endLng: -70.6693, arcAlt: 0.35, color: "#E8442E" },
+  { order: 2, startLat: 34.0522, startLng: -118.2437, endLat: -12.0464, endLng: -77.0428, arcAlt: 0.32, color: "#F97316" },
+  { order: 3, startLat: 25.7617, startLng: -80.1918, endLat: -0.2295, endLng: -78.5243, arcAlt: 0.28, color: "#FB923C" },
+
+  // América ↔ Europa / África
+  { order: 4, startLat: 40.7128, startLng: -74.006, endLat: 51.5074, endLng: -0.1278, arcAlt: 0.42, color: "#FACC15" },
+  { order: 5, startLat: -0.2295, startLng: -78.5243, endLat: 14.5995, endLng: -90.5167, arcAlt: 0.38, color: "#F87171" },
+  { order: 6, startLat: -0.2295, startLng: -78.5243, endLat: 6.5244, endLng: 3.3792, arcAlt: 0.46, color: "#F97316" },
+
+  // Europa ↔ Asia
+  { order: 7, startLat: 48.8566, startLng: 2.3522, endLat: 22.5431, endLng: 114.0579, arcAlt: 0.52, color: "#F87171" },
+  { order: 8, startLat: 55.7558, startLng: 37.6173, endLat: 28.6139, endLng: 77.209, arcAlt: 0.48, color: "#E11D48" },
+  { order: 9, startLat: 41.9028, startLng: 12.4964, endLat: 31.2304, endLng: 121.4737, arcAlt: 0.54, color: "#FF7F6B" },
+
+  // Asia ↔ Oceanía
+  { order: 10, startLat: 22.5431, startLng: 114.0579, endLat: -33.8688, endLng: 151.2093, arcAlt: 0.5, color: "#FB7185" },
+  { order: 11, startLat: 35.6762, startLng: 139.6503, endLat: -37.8136, endLng: 144.9631, arcAlt: 0.48, color: "#F97316" },
+  { order: 12, startLat: 1.3521, startLng: 103.8198, endLat: -36.8485, endLng: 174.7633, arcAlt: 0.44, color: "#FDBA74" },
+
+  // Asia ↔ América / África
+  { order: 13, startLat: 22.5431, startLng: 114.0579, endLat: 37.7749, endLng: -122.4194, arcAlt: 0.6, color: "#F87171" },
+  { order: 14, startLat: 22.5431, startLng: 114.0579, endLat: 12.8797, endLng: 121.774, arcAlt: 0.3, color: "#FF9F43" },
+  { order: 15, startLat: 22.5431, startLng: 114.0579, endLat: -1.2864, endLng: 36.8172, arcAlt: 0.56, color: "#F97316" },
+
+  // Global supply routes
+  { order: 16, startLat: 52.52, startLng: 13.405, endLat: 34.6937, endLng: 135.5023, arcAlt: 0.58, color: "#F87171" },
+  { order: 17, startLat: 31.2304, startLng: 121.4737, endLat: -34.6037, endLng: -58.3816, arcAlt: 0.6, color: "#FA5F55" },
+  { order: 18, startLat: 22.5431, startLng: 114.0579, endLat: 24.7136, endLng: 46.6753, arcAlt: 0.52, color: "#FF7F6B" },
+  { order: 19, startLat: 19.4326, startLng: -99.1332, endLat: 51.1657, endLng: 10.4515, arcAlt: 0.4, color: "#FACC15" },
+  { order: 20, startLat: 14.5995, startLng: 120.9842, endLat: 55.7558, endLng: 37.6173, arcAlt: 0.5, color: "#FDA4AF" },
 ];
 
 const globeConfig = {
@@ -21,11 +46,11 @@ const globeConfig = {
   emissive: "#050505",
   emissiveIntensity: 0.12,
   shininess: 0.9,
-  polygonColor: "rgba(255,255,255,0.35)",
-  ambientLight: "#e8442e",
+  polygonColor: "#f5f7ff",
+  ambientLight: "#ffffff",
   directionalLeftLight: "#ffffff",
-  directionalTopLight: "#fef2f2",
-  pointLight: "#ff7a5e",
+  directionalTopLight: "#ffffff",
+  pointLight: "#ffffff",
   arcTime: 1200,
   arcLength: 0.9,
   rings: 1,
