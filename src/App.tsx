@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/header/Header";
 import { HeroSection } from "@/components/sections/home/HeroSection";
 import { ServicesSection } from "@/components/sections/home/ServicesSection";
 import { AboutSection } from "@/components/sections/home/AboutSection";
+import { TestimonialsSection } from "@/components/sections/home/TestimonialsSection";
 import { ContactSection } from "@/components/sections/home/ContactSection";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <HeroSection />
         <ServicesSection />
         <AboutSection />
+        <TestimonialsSection />
         <ContactSection />
       </main>
       <footer className="border-t border-white/10 bg-black py-8">
