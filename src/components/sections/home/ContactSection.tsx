@@ -28,33 +28,41 @@ export function ContactSection() {
               Contacto
             </p>
             <h2 className="text-section-title text-left text-white">
-              Construyamos la próxima gran historia de tu empresa
+              Estamos listos para ayudarle con sus necesidades de comercio internacional
             </h2>
           </motion.div>
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-lg leading-relaxed text-white/70"
+            className="grid gap-6 text-white/75"
           >
-            Cuéntanos sobre tus retos actuales y te responderemos en menos de 48 horas con una propuesta clara, tiempos estimados y próximos pasos concretos.
-          </motion.p>
+            <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur-xl">
+              <span className="text-xs font-semibold uppercase tracking-[0.4em] text-brand-500/80">
+                Dirección
+              </span>
+              <p className="mt-3 text-base leading-relaxed text-white/80">
+                C05, R&D Complex Building, Fuhua Community, Xixiang Street, Bao'an District, Shenzhen
+              </p>
+            </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            {[
-              { heading: "Consultoría inicial", text: "Sesión estratégica gratuita para entender tus metas." },
-              { heading: "Implementación ágil", text: "Roadmap de entregables priorizados según impacto." },
-              { heading: "Equipo senior", text: "Líderes de producto, diseño y tecnología a tu alcance." },
-              { heading: "Colaboración continua", text: "Medimos resultados y optimizamos cada sprint." },
-            ].map((item) => (
-              <div key={item.heading} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <div className="text-sm font-semibold text-brand-500">{item.heading}</div>
-                <p className="mt-2 text-sm text-white/70">{item.text}</p>
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur-xl">
+                <span className="text-xs font-semibold uppercase tracking-[0.4em] text-brand-500/80">
+                  Teléfono
+                </span>
+                <p className="mt-3 text-base text-white/80">+86 150 1277 5212</p>
               </div>
-            ))}
-          </div>
+              <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur-xl">
+                <span className="text-xs font-semibold uppercase tracking-[0.4em] text-brand-500/80">
+                  Correo Electrónico
+                </span>
+                <p className="mt-3 text-base text-white/80">info@vistatradingnetwork.com</p>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         <motion.div
