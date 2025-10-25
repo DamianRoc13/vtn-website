@@ -81,7 +81,7 @@ export function HeroSection() {
       </div>
 
       <div className="relative z-10 mx-auto flex w-4/5 max-w-7xl flex-col gap-16 px-4 sm:px-6 lg:flex-row lg:items-center">
-        <div className="w-full space-y-8 lg:w-1/2">
+        <div className="w-full space-y-8 text-center lg:w-1/2 lg:text-left">
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -105,7 +105,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col gap-4 sm:flex-row"
+            className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:items-start lg:justify-start"
           >
             <a href="#contacto" className="btn-primary">
               Contáctanos
