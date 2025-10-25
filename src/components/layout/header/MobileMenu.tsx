@@ -52,7 +52,7 @@ export function MobileMenu({ navItems, activeSection }: MobileMenuProps) {
           <img
             src="/vtn-image-all-white.svg"
             alt="VTN"
-            className="h-7 w-auto"
+            className="h-10 w-auto"
             loading="lazy"
           />
         </a>

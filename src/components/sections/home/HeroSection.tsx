@@ -55,8 +55,8 @@ export function HeroSection() {
         />
       </div>
 
-      <div className="container-custom relative z-10 flex flex-col-reverse items-center gap-16 lg:flex-row">
-        <div className="w-full max-w-2xl space-y-8">
+      <div className="relative z-10 mx-auto flex w-4/5 max-w-7xl flex-col gap-16 px-4 sm:px-6 lg:flex-row lg:items-center">
+        <div className="w-full space-y-8 lg:w-1/2">
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -73,7 +73,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-white/70"
           >
-            Combinamos estrategia, diseño y tecnología para crear experiencias digitales de alto impacto. Acompañamos a empresas ambiciosas en cada etapa de su transformación.
+            Conectamos tus ideas con fábricas confiables en China, negociamos términos justos, gestionamos calidad y te entregamos sin intermediarios. De la Feria al muelle, contigo en cada paso.
           </motion.p>
 
           <motion.div
@@ -83,29 +83,11 @@ export function HeroSection() {
             className="flex flex-col gap-4 sm:flex-row"
           >
             <a href="#contacto" className="btn-primary">
-              Agenda una Consultoría
+              Contáctanos
             </a>
             <a href="#servicios" className="btn-secondary">
-              Conoce Nuestros Servicios
+              Nuestros Servicios
             </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-3 gap-6 pt-8 text-white/80"
-          >
-            {[
-              { label: "Clientes satisfechos", value: "60+" },
-              { label: "Proyectos lanzados", value: "120+" },
-              { label: "Años de experiencia", value: "5" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div className="text-2xl font-bold text-brand-500">{stat.value}</div>
-                <div className="text-sm text-white/50">{stat.label}</div>
-              </div>
-            ))}
           </motion.div>
         </div>
 
@@ -113,10 +95,10 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.95, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative flex w-full max-w-3xl items-center justify-center"
+          className="relative flex w-full items-center justify-center lg:w-1/2"
         >
-          <div className="absolute -inset-24 rounded-full bg-gradient-to-br from-brand-500/25 via-transparent to-brand-500/10 blur-[140px]" />
-          <div className="relative aspect-square w-full max-w-[900px]">
+          <div className="absolute -inset-28 rounded-full bg-gradient-to-br from-brand-500/25 via-transparent to-brand-500/10 blur-[180px]" />
+          <div className="relative aspect-square w-full max-w-[1200px]">
             <div className="relative h-full w-full">
               <World globeConfig={globeConfig} data={globeData} />
             </div>

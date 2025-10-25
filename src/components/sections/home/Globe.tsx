@@ -19,7 +19,7 @@ declare global {
 }
 
 const RING_PROPAGATION_SPEED = 3;
-const cameraZ = 500;
+const cameraZ = 300;
 
 type Position = {
   order: number;
@@ -331,7 +331,7 @@ export function World({ globeConfig, data }: WorldProps) {
     <Canvas
       scene={scene}
       camera={new PerspectiveCamera(50, 1, 180, 1800)}
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: "150%", height: "150%", top:"-20%" }}
     >
       <WebGLRendererConfig />
       <ambientLight

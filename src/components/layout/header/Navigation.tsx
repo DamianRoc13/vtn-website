@@ -26,11 +26,12 @@ export function Navigation({ navItems, activeSection }: NavigationProps) {
   return (
     <motion.div
       className={cn(
-        "relative mx-auto flex w-full max-w-6xl items-center gap-6 px-6 py-3 transition-all duration-300",
+        "relative mx-auto flex max-w-6xl items-center gap-6 px-6 py-3 transition-all duration-300",
         showBackground
           ? "rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl"
           : "rounded-full border border-transparent",
       )}
+      animate={{ width: showBackground ? "50%" : "100%" }}
       transition={{ duration: 0.4 }}
     >
       <div className="flex flex-1 items-center">
@@ -38,7 +39,7 @@ export function Navigation({ navItems, activeSection }: NavigationProps) {
           <img
             src="/vtn-image-all-white.svg"
             alt="VTN"
-            className="h-8 w-auto"
+            className="h-10 w-auto"
             loading="lazy"
           />
         </a>
