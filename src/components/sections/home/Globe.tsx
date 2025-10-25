@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, Text } from "@react-three/drei";
+import { useEffect, useMemo, useState } from "react";
+import { Canvas, extend, useThree } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 import ThreeGlobe from "three-globe";
-import { Color, Fog, Group, Mesh, PerspectiveCamera, Scene, Vector3 } from "three";
+import { Color, Fog, Mesh, PerspectiveCamera, Scene, Vector3 } from "three";
 
 import countries from "./data/globe.json";
 
@@ -308,115 +308,6 @@ export function Globe({ globeConfig, data }: WorldProps) {
   return <primitive object={globeInstance} />;
 }
 
-function OrbitingSatellites({ isDarkMode }: { isDarkMode: boolean }) {
-  const groupRef = useRef<Group>(null);
-
-  const satellites = useMemo(
-    () => [
-      {
-        label: "120+",
-        sublabel: "Proyectos",
-        angle: 0,
-        radius: 200,
-        speed: 0.4,
-        orbitType: "horizontal",
-        tilt: 0,
-        color: isDarkMode ? "#f87171" : "#e8442e",
-      },
-      {
-        label: "60+",
-        sublabel: "Clientes",
-        angle: Math.PI / 4,
-        radius: 220,
-        speed: 0.3,
-        orbitType: "vertical",
-        tilt: Math.PI / 2,
-        color: isDarkMode ? "#38bdf8" : "#0ea5e9",
-      },
-      {
-        label: "5+",
-        sublabel: "Años",
-        angle: Math.PI / 2,
-        radius: 210,
-        speed: 0.5,
-        orbitType: "diagonal",
-        tilt: Math.PI / 4,
-        color: isDarkMode ? "#facc15" : "#eab308",
-      },
-    ],
-    [isDarkMode],
-  );
-
-  useFrame((state) => {
-    if (!groupRef.current) return;
-
-    satellites.forEach((satellite, index) => {
-      const satelliteGroup = groupRef.current?.children[index] as Group;
-      if (!satelliteGroup) return;
-
-      const time = state.clock.elapsedTime;
-      const angle = satellite.angle + time * satellite.speed;
-
-      let x: number;
-      let y: number;
-      let z: number;
-
-      switch (satellite.orbitType) {
-        case "horizontal":
-          x = Math.cos(angle) * satellite.radius;
-          y = Math.sin(time * 0.2 + index) * 20;
-          z = Math.sin(angle) * satellite.radius;
-          break;
-        case "vertical":
-          x = Math.sin(angle) * satellite.radius;
-          y = Math.cos(angle) * satellite.radius;
-          z = Math.cos(time * 0.1 + index) * 50;
-          break;
-        case "diagonal":
-          x = Math.cos(angle) * satellite.radius;
-          y = Math.sin(angle) * satellite.radius * 0.7;
-          z = Math.sin(angle + Math.PI / 4) * satellite.radius * 0.8;
-          break;
-        default:
-          x = Math.cos(angle) * satellite.radius;
-          y = 0;
-          z = Math.sin(angle) * satellite.radius;
-      }
-
-      satelliteGroup.position.set(x, y, z);
-      satelliteGroup.lookAt(state.camera.position);
-    });
-  });
-
-  return (
-    <group ref={groupRef}>
-      {satellites.map((satellite, index) => (
-        <group key={index}>
-          <Text
-            position={[0, 6, 0]}
-            fontSize={12}
-            color={satellite.color}
-            anchorX="center"
-            anchorY="middle"
-          >
-            {satellite.label}
-          </Text>
-          <Text
-            position={[0, -6, 0]}
-            fontSize={6}
-            color={isDarkMode ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.7)"}
-            anchorX="center"
-            anchorY="middle"
-            fontWeight="normal"
-          >
-            {satellite.sublabel}
-          </Text>
-        </group>
-      ))}
-    </group>
-  );
-}
-
 function WebGLRendererConfig() {
   const { gl, size } = useThree();
 
@@ -435,10 +326,6 @@ export function World({ globeConfig, data }: WorldProps) {
     currentScene.fog = new Fog(0xffffff, 400, 2000);
     return currentScene;
   }, []);
-
-  const isDarkMode =
-    globeConfig.globeColor === "#0f172a" ||
-    globeConfig.globeColor === "transparent";
 
   return (
     <Canvas
@@ -465,7 +352,6 @@ export function World({ globeConfig, data }: WorldProps) {
         intensity={0.8}
       />
       <Globe globeConfig={globeConfig} data={data} />
-      <OrbitingSatellites isDarkMode={isDarkMode} />
       <OrbitControls
         enablePan={false}
         enableZoom={false}

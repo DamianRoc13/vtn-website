@@ -64,7 +64,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-hero text-white"
           >
-            Soluciones a medida que <span className="text-gradient-brand">impulsan tu negocio</span>
+            VISTA TRADING <span className="text-gradient-brand">NETWORK</span>
           </motion.h1>
 
           <motion.p
@@ -113,10 +113,10 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.95, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative flex w-full max-w-xl items-center justify-center"
+          className="relative flex w-full max-w-3xl items-center justify-center"
         >
-          <div className="absolute -inset-20 rounded-full bg-gradient-to-br from-brand-500/20 via-transparent to-brand-500/10 blur-3xl" />
-          <div className="glass-panel relative aspect-square w-full max-w-[520px] border-white/10 bg-white/5 p-6">
+          <div className="absolute -inset-24 rounded-full bg-gradient-to-br from-brand-500/25 via-transparent to-brand-500/10 blur-[140px]" />
+          <div className="relative aspect-square w-full max-w-[900px]">
             <div className="relative h-full w-full">
               <World globeConfig={globeConfig} data={globeData} />
             </div>

@@ -49,9 +49,12 @@ export function MobileMenu({ navItems, activeSection }: MobileMenuProps) {
         )}
       >
         <a href="#inicio" className="flex items-center">
-          <span className="text-sm font-semibold uppercase tracking-[0.45em] text-white">
-            VTN
-          </span>
+          <img
+            src="/vtn-image-all-white.svg"
+            alt="VTN"
+            className="h-7 w-auto"
+            loading="lazy"
+          />
         </a>
 
         <HamburgerButton open={open} onToggle={toggle} />

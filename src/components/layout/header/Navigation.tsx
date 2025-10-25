@@ -35,9 +35,12 @@ export function Navigation({ navItems, activeSection }: NavigationProps) {
     >
       <div className="flex flex-1 items-center">
         <a href="#inicio" className="flex items-center">
-          <span className="text-sm font-semibold uppercase tracking-[0.45em] text-white">
-            VTN
-          </span>
+          <img
+            src="/vtn-image-all-white.svg"
+            alt="VTN"
+            className="h-8 w-auto"
+            loading="lazy"
+          />
         </a>
       </div>
 
