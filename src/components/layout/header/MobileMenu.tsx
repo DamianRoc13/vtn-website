@@ -57,6 +57,15 @@ export function MobileMenu({ navItems, activeSection }: MobileMenuProps) {
           />
         </a>
 
+        <div className="flex flex-col items-center gap-1 text-center leading-tight">
+          <span className="text-[0.72rem] font-semibold uppercase tracking-[0.55em] text-white">
+            VISTA TRADING
+          </span>
+          <span className="text-[0.72rem] font-semibold uppercase tracking-[0.55em] text-brand-500">
+            NETWORK
+          </span>
+        </div>
+
         <HamburgerButton open={open} onToggle={toggle} />
       </div>
 
