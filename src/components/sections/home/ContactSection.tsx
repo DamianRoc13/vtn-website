@@ -70,7 +70,7 @@ export function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="glass-panel relative overflow-hidden border border-white/10 bg-white/5 p-8"
+          className="glass-panel relative hidden overflow-hidden border border-white/10 bg-white/5 p-8"
         >
           <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-500/30 blur-3xl" />
           <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-brand-500/20 blur-3xl" />
