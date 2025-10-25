@@ -38,17 +38,16 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-const collageImages = [
-  { src: "/social.webp", className: "top-0 left-6 w-40" },
-  { src: "/meet.webp", className: "top-24 right-0 w-48" },
-  { src: "/meet-2.webp", className: "bottom-0 left-0 w-44" },
-  { src: "/feria-1.webp", className: "bottom-10 right-8 w-52" },
-  { src: "/fabry.webp", className: "top-1/2 left-1/2 w-40 -translate-x-1/2 -translate-y-1/2" },
+const galleryImages = [
+  { src: "/social.webp", label: "Networking Global" },
+  { src: "/meet.webp", label: "Reuniones Estratégicas" },
+  { src: "/meet-2.webp", label: "Acompañamiento 360°" },
+  { src: "/feria-1.webp", label: "Feria Internacional" },
+  { src: "/fabry.webp", label: "Visitas a Fábrica" },
 ];
 
 export function TestimonialsSection() {
   const cardsRef = useRef<HTMLDivElement[]>([]);
-  const collageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -93,17 +92,6 @@ export function TestimonialsSection() {
 
     mm.add("(min-width: 768px)", () => {
       animateCards({ cardStart: "top 88%", baseDelay: 0.1 });
-    });
-
-    const collageImages = collageRef.current?.querySelectorAll("[data-collage]") ?? [];
-    collageImages.forEach((image, index) => {
-      const floatTimeline = gsap.timeline({ repeat: -1, yoyo: true });
-      floatTimeline.to(image, {
-        y: index % 2 === 0 ? 14 : -14,
-        x: index % 2 === 0 ? -10 : 10,
-        duration: 4 + index,
-        ease: "sine.inOut",
-      });
     });
 
     return () => mm.revert();
@@ -171,33 +159,99 @@ export function TestimonialsSection() {
           </motion.p>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
-          <div className="grid gap-8 lg:grid-cols-2">
+        <div className="space-y-16">
+          <div className="grid gap-8 md:grid-cols-2">
             {testimonialCards}
           </div>
 
-          <div ref={collageRef} className="relative mx-auto flex h-full w-full max-w-[520px] items-center justify-center">
-            <div className="absolute inset-0 -z-10 rounded-[44px] bg-gradient-to-br from-brand-500/20 via-transparent to-brand-500/5 blur-3xl" />
-            <div className="relative aspect-square w-full max-w-[460px]">
-              {collageImages.map((image) => (
-                <div
-                  key={image.src}
-                  data-collage
-                  className={`absolute overflow-hidden rounded-[26px] border border-white/10 bg-[#0b0c10]/90 shadow-[0_20px_50px_rgba(232,68,46,0.25)] backdrop-blur-xl ${image.className}`}
-                >
-                  <img
-                    src={image.src}
-                    alt="Experiencia VTN"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
+          <div className="space-y-8">
+            <div className="testimonial-gallery">
+              {galleryImages.map((image) => (
+                <div key={image.src} className="testimonial-gallery__card">
+                  <img src={image.src} alt={image.label} loading="lazy" />
+                  <div className="testimonial-gallery__label">{image.label}</div>
                 </div>
               ))}
-              <div className="absolute inset-0 rounded-[34px] border border-white/5" />
             </div>
           </div>
         </div>
       </div>
+      <style>{`
+        .testimonial-gallery {
+          display: flex;
+          gap: 1.5rem;
+          margin: 0 auto;
+          overflow: hidden;
+          transform: skewY(-3deg) skewX(2deg);
+          padding: 1.25rem;
+          justify-content: center;
+        }
+
+        .testimonial-gallery__card {
+          flex: 1;
+          position: relative;
+          height: clamp(340px, 30vw, 520px);
+          border-radius: 32px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(8, 9, 12, 0.9);
+          transition: flex 0.9s ease-in-out, transform 0.9s ease-in-out;
+          display: flex;
+        }
+
+        .testimonial-gallery__card img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          
+          transition: filter 0.9s ease-in-out, transform 0.9s ease-in-out;
+        }
+
+        .testimonial-gallery__label {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          padding: 0.75rem 1rem;
+          background: rgba(0, 0, 0, 0.5);
+          color: white;
+          font-weight: 600;
+          font-size: 0.9rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          transform-origin: 0% 0%;
+          transform: rotate(-90deg) translate(-100%, 0);
+          transition: transform 0.6s ease, background 0.6s ease, font-size 0.6s ease;
+        }
+
+        .testimonial-gallery__card:hover {
+          flex: 3.75;
+        }
+
+        .testimonial-gallery__card:hover img {
+          filter: grayscale(0%);
+          transform: scale(1.08);
+        }
+
+        .testimonial-gallery__card:hover .testimonial-gallery__label {
+          transform: rotate(0deg) translate(0, 0);
+          background: rgba(232, 68, 46, 0.75);
+          font-size: 1.05rem;
+        }
+
+        @media (max-width: 1024px) {
+          .testimonial-gallery {
+            flex-direction: column;
+            transform: none;
+          }
+
+          .testimonial-gallery__card {
+            height: clamp(260px, 65vw, 400px);
+          }
+          .testimonial-gallery__card:hover {
+            flex: 1;
+          }
+        }
+      `}</style>
     </section>
   );
 }
