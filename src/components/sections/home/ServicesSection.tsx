@@ -1,7 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function ServicesSection() {
   const services = useMemo(
@@ -70,22 +72,62 @@ export function ServicesSection() {
     [],
   );
 
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: { staggerChildren: 0.12, delayChildren: 0.15 },
-    },
-  };
+  const cardsRef = useRef<HTMLElement[]>([]);
+  const gridRef = useRef<HTMLDivElement | null>(null);
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 48, scale: 0.96 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      cardsRef.current.forEach((card, index) => {
+        if (!card) return;
+
+        const baseDelay = index * 0.08;
+
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 120, scale: 0.92, rotateX: -8, transformOrigin: "center top" },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotateX: 0,
+            duration: 1.1,
+            ease: "power3.out",
+            delay: baseDelay,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 78%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
+
+        const aura = card.querySelector<HTMLElement>("[data-spotlight]");
+        if (aura) {
+          gsap.fromTo(
+            aura,
+            { opacity: 0, scale: 0.85 },
+            {
+              opacity: 0.65,
+              scale: 1,
+              duration: 1,
+              ease: "power2.out",
+              delay: baseDelay + 0.12,
+              scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+              },
+            },
+          );
+        }
+      });
+    }, gridRef);
+
+    return () => ctx.revert();
+  }, [services.length]);
 
   return (
     <section id="servicios" className="section-padding bg-[#050505]">
@@ -118,26 +160,25 @@ export function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-section-subtitle text-white/70"
+            className="text-lg leading-relaxed"
           >
             Desde la investigación, negociación hasta la inspección y la capacitación, cada servicio está diseñado para reducir riesgos, aumentar precisión y acelerar su expansión global.
           </motion.p>
         </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid gap-8 md:grid-cols-2 xl:grid-cols-3"
-        >
+        <div ref={gridRef} className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {services.map((service, index) => (
-            <motion.article
+            <article
               key={service.title}
-              variants={cardVariants}
+              ref={(el) => {
+                if (el) cardsRef.current[index] = el;
+              }}
               className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-[1px]"
             >
-              <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/12 via-transparent to-transparent opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-70" />
+              <div
+                data-spotlight
+                className="absolute inset-0 -z-10 bg-gradient-to-b from-white/12 via-transparent to-transparent opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-70"
+              />
               <div className="relative flex h-full flex-col gap-6 rounded-[28px] bg-[#08090c]/95 p-8 backdrop-blur-xl transition-all duration-500 group-hover:-translate-y-1 group-hover:bg-[#0b0c10]/95">
                 <div className="flex items-start justify-between">
                   <div>
@@ -170,9 +211,9 @@ export function ServicesSection() {
                   <span>+ impacto</span>
                 </div>
               </div>
-            </motion.article>
+            </article>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
